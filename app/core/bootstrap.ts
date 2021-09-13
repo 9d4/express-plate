@@ -22,7 +22,7 @@ export default function bootstrap(app: Express): void {
    * first argument is where the static uri can be accessed from webserver
    * and the argument inside @function expressStatic is the root folder of statics
    */
-  app.use("/public", expressStatic("/public"));
+  app.use("/public", expressStatic("./public"));
 
   /**
    * Setting routes for web and api endpoint
