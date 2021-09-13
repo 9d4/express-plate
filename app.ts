@@ -3,7 +3,7 @@ import { Router } from "express";
 import http from "http";
 import dotenv from "dotenv";
 import { apiRoutes, webRoutes } from "./routes";
-import { createServer, server } from "./server";
+import { createServer, server } from "./app/core/server";
 
 dotenv.config();
 
