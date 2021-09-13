@@ -1,8 +1,9 @@
 import { Express, json, urlencoded, static as expressStatic } from "express";
 import expressLayouts from "express-ejs-layouts";
 import { apiRoutes, webRoutes } from "../../routes";
+import { setupDb } from "./database";
 
-export default function bootstrap(app: Express): void {
+export default async function bootstrap(app: Express): Promise<any> {
   /**
    * Setting express utilities
    */
@@ -30,4 +31,9 @@ export default function bootstrap(app: Express): void {
    */
   app.use("/", webRoutes);
   app.use("/api", apiRoutes);
+
+  /**
+   * Setting database
+   */
+  await setupDb();
 }

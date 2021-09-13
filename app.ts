@@ -11,9 +11,13 @@ const port = process.env.PORT || 3000;
 /**
  * BOOTSTRAP
  */
-bootstrap(app);
-
-/**
- * Build and listen server
- */
-createServer(app, port);
+bootstrap(app)
+  .then(() => {
+    /**
+     * Build and listen server
+     */
+    createServer(app, port);
+  })
+  .catch((e) => {
+    throw new Error(e);
+  });
