@@ -1,16 +1,19 @@
 {
-  "name": "tstest",
+  "name": "express-plate",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon app.ts localhost 9000",
     "build": "tsc",
     "serve": "node ./dist/app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "express",
+    "ts"
+  ],
+  "author": "https://github.com/traperwaze",
   "license": "ISC",
-  "description": "",
+  "description": "Minimal express template",
   "dependencies": {
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.1"
