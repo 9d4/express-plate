@@ -1,0 +1,1 @@
+This is the directory where we can put your static assets. We can access the file from `/public` uri. You may change it in `app/core/bootstrap.ts`.
