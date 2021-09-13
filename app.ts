@@ -1,9 +1,7 @@
-import express from "express";
-import { Router } from "express";
-import http from "http";
 import dotenv from "dotenv";
-import { apiRoutes, webRoutes } from "./routes";
-import { createServer, server } from "./app/core/server";
+import express from "express";
+import { createServer } from "./app/core/server";
+import bootstrap from "./app/core/bootstrap";
 
 dotenv.config();
 
@@ -11,11 +9,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 /**
- * Setting routes
- *
+ * BOOTSTRAP
  */
-app.use("/", webRoutes);
-app.use("/api", apiRoutes);
+bootstrap(app);
 
 /**
  * Build and listen server
