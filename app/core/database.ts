@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import dbConfig from "../../config/database";
 
 const host: string = process.env.MONGODB_HOST || "mongodb://localhost:27017";
 const options = {
@@ -6,16 +7,36 @@ const options = {
   autoIndex: true,
 };
 
-async function setupDb(): Promise<any> {
-  console.log("[database] connecting...");
+const usedDbEngine = dbConfig.dbEngine;
+let DB;
 
-  await mongoose
-    .connect(host, options)
-    .then(() => console.log("[database] connected"))
-    .catch((e) => {
-      console.log("[database] Unable to connect");
-      process.exit(1);
-    });
+function setupDb(): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    if (!dbConfig.useDB) {
+      console.log("[database] not used");
+      return resolve();
+    }
+
+    console.log("[database] connecting...");
+
+    switch (usedDbEngine) {
+      case "mongodb":
+        return mongoose
+          .connect(host, options)
+          .then(() => {
+            console.log("[database] connected");
+            DB = mongoose;
+            return resolve();
+          })
+          .catch((e) => {
+            console.log("[database] Unable to connect");
+            throw e;
+          });
+      default:
+        console.log("[database] unknown database");
+        return resolve();
+    }
+  });
 }
 
-export { mongoose, setupDb };
+export { DB, setupDb };
