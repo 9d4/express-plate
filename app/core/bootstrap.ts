@@ -37,6 +37,6 @@ export default async function bootstrap(app: Express): Promise<void> {
     /**
      * Setting database
      */
-    setupDb().then(resolve);
+    setupDb().then(resolve).catch(reject);
   });
 }
