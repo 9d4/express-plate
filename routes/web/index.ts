@@ -5,4 +5,5 @@ router.get("/", (req, res, next) => {
   res.send("Holla Molla");
 });
 
-export { router as web };
+export { router as webRoutes };
+export default router;

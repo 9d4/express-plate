@@ -1,6 +1,7 @@
 import { Express, json, urlencoded, static as expressStatic } from "express";
 import expressLayouts from "express-ejs-layouts";
-import { apiRoutes, webRoutes } from "../../routes";
+import webRoutes from "../../routes/web";
+import apiRoutes from "../../routes/api";
 import { setupDb } from "./database";
 
 export default async function bootstrap(app: Express): Promise<void> {
