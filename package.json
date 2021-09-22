@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.ts localhost 9000",
+    "dev": "nodemon app.ts",
     "build": "tsc",
     "serve": "node ./dist/app.js"
   },

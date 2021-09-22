@@ -1,20 +1,28 @@
 import mongoose from "mongoose";
 import dbConfig from "../../config/database";
 
-const host: string = process.env.MONGODB_HOST || "mongodb://localhost:27017";
-const options = {
-  autoCreate: true,
-  autoIndex: true,
-};
-
+const host: string = dbConfig.mongodbUri;
 const usedDbEngine = dbConfig.dbEngine;
 let DB;
+
+enum Messages {
+  CONNECTING = "connecting...",
+  CONNECTED = "connected",
+  NOT_USED = "not used",
+  UNABLE_CONNECT = "unable to connect database",
+  UNKNOWN = "unknown database",
+}
+
+function genMsg(msgEnum: Messages) {
+  return "[database] " + msgEnum;
+}
 
 function setupDb(): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     if (!dbConfig.useDB) {
       console.log("[database] not used");
-      return resolve();
+      resolve();
+      return;
     }
 
     console.log("[database] connecting...");
@@ -22,19 +30,19 @@ function setupDb(): Promise<void> {
     switch (usedDbEngine) {
       case "mongodb":
         return mongoose
-          .connect(host, options)
+          .connect(host, { autoCreate: true, autoIndex: true })
           .then(() => {
             console.log("[database] connected");
             DB = mongoose;
-            return resolve();
+            resolve();
           })
           .catch((e) => {
-            console.log("[database] Unable to connect");
-            throw e;
+            console.log(genMsg(Messages.UNABLE_CONNECT));
+            reject(new Error(e.message));
           });
       default:
-        console.log("[database] unknown database");
-        return resolve();
+        console.log(genMsg(Messages.UNKNOWN));
+        reject(genMsg(Messages.UNKNOWN));
     }
   });
 }
